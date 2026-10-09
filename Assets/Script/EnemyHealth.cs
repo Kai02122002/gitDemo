@@ -1,0 +1,46 @@
+using UnityEngine;
+
+public class EnemyHealth : MonoBehaviour
+{
+    [SerializeField]
+    private int maxHealth = 50;
+    private int currentHealth;
+    private EnemySpawner enemySpawner;
+    [System.Obsolete]
+    private void Awake()
+    {
+        currentHealth = maxHealth;
+        enemySpawner = FindFirstObjectByType<EnemySpawner>();
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (damage <=0)
+        {
+            return;
+        }
+        currentHealth = Mathf.Max(currentHealth - damage,0);
+        Debug.Log("Enemy Health: "+ currentHealth);
+        if (currentHealth == 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
+        enemySpawner.SpawnEnemy();
+    }
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
